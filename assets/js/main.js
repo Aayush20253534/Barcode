@@ -270,6 +270,7 @@
     const PHONE_MAX_H = 0.5; // share of the hero height the frame may fill (short phones)
     const PHONE_Y = 0.3;     // share of the spare height left above the frame
     const PHONE_GAP = 16;    // CSS px kept clear of the nav and the end copy
+    const PHONE_BG = '#080808';
     const phoneScale = () => {
       const vw = window.innerWidth;
       return vw <= 390 ? 0.56 : vw <= 430 ? 0.6 : 0.66;
@@ -337,7 +338,7 @@
       const ch = canvas.height;
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
-      if (!iw || !ih) return;
+      if (!iw || !ih) return null;
       ctx.globalAlpha = alpha;
 
       // Phones: smaller contained composition. Every frame and the end
@@ -345,7 +346,7 @@
       if (phone) {
         const r = phoneFit(cw, ch, iw, ih);
         ctx.drawImage(img, r.x, r.y, r.w, r.h);
-        return;
+        return r;
       }
 
       // Desktop keeps the cinematic edge-to-edge crop. Tablets use a
@@ -361,6 +362,52 @@
       const y = mobile ? (ch - h) * 0.5 : (ch - h) * 0.45;
 
       ctx.drawImage(img, x, y, w, h);
+      return null;
+    }
+
+    // Portrait source frames are intentionally contained on phones. Their
+    // near-black photographed background is not exactly the same shade as
+    // the site's obsidian background, which can expose the source image as a
+    // visible rectangle. Feather the four source-image edges back into the
+    // hero background so the bottle feels suspended in the page instead of
+    // sitting inside a box. This is canvas-only and phone-only; desktop and
+    // tablet composition remains untouched.
+    function blendPhoneFrameEdges(r) {
+      if (!phone || !r) return;
+
+      const fadeX = Math.max(12, r.w * 0.13);
+      const fadeTop = Math.max(10, r.h * 0.055);
+      const fadeBottom = Math.max(14, r.h * 0.1);
+      const transparent = 'rgba(8, 8, 8, 0)';
+
+      ctx.save();
+      ctx.globalAlpha = 1;
+
+      let g = ctx.createLinearGradient(r.x, 0, r.x + fadeX, 0);
+      g.addColorStop(0, PHONE_BG);
+      g.addColorStop(1, transparent);
+      ctx.fillStyle = g;
+      ctx.fillRect(r.x, r.y, fadeX, r.h);
+
+      g = ctx.createLinearGradient(r.x + r.w - fadeX, 0, r.x + r.w, 0);
+      g.addColorStop(0, transparent);
+      g.addColorStop(1, PHONE_BG);
+      ctx.fillStyle = g;
+      ctx.fillRect(r.x + r.w - fadeX, r.y, fadeX, r.h);
+
+      g = ctx.createLinearGradient(0, r.y, 0, r.y + fadeTop);
+      g.addColorStop(0, PHONE_BG);
+      g.addColorStop(1, transparent);
+      ctx.fillStyle = g;
+      ctx.fillRect(r.x, r.y, r.w, fadeTop);
+
+      g = ctx.createLinearGradient(0, r.y + r.h - fadeBottom, 0, r.y + r.h);
+      g.addColorStop(0, transparent);
+      g.addColorStop(1, PHONE_BG);
+      ctx.fillStyle = g;
+      ctx.fillRect(r.x, r.y + r.h - fadeBottom, r.w, fadeBottom);
+
+      ctx.restore();
     }
 
     function nearest(i) {
@@ -383,29 +430,34 @@
 
       const a = nearest(i0);
       const fx = focusX(film);
+      let phoneRect = null;
 
       // Contained mobile frames can leave unused canvas space. Clear it
       // before drawing so those areas stay clean black between frames.
       if (variant === 'm') {
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#080808';
+        ctx.fillStyle = PHONE_BG;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
       if (a >= 0) {
-        drawCover(frames[a], 1, fx);
+        phoneRect = drawCover(frames[a], 1, fx) || phoneRect;
         // frame interpolation: blend toward the next frame by the fractional position
-        if (a === i0 && t > 0.002 && i0 + 1 < N && frames[i0 + 1]) drawCover(frames[i0 + 1], t, fx);
+        if (a === i0 && t > 0.002 && i0 + 1 < N && frames[i0 + 1]) {
+          phoneRect = drawCover(frames[i0 + 1], t, fx) || phoneRect;
+        }
       } else {
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#080808';
+        ctx.fillStyle = PHONE_BG;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       // resolve into the crisp 2K master still during the hold
       if (hold > 0 && endImg && endImg.complete && endImg.naturalWidth) {
-        drawCover(endImg, smooth(clamp(hold * 2.4)), fx);
+        phoneRect = drawCover(endImg, smooth(clamp(hold * 2.4)), fx) || phoneRect;
       }
       ctx.globalAlpha = 1;
+
+      if (phoneRect) blendPhoneFrameEdges(phoneRect);
 
       // overlay choreography
       const end = smooth(clamp((p - 0.83) / 0.1));
