@@ -300,14 +300,23 @@
       // visible instead of being enlarged by cover-cropping.
       const mobile = variant === 'm';
       const phone = mobile && window.innerWidth <= 600;
-      const mobileScale = phone ? 0.84 : 1;
+
+      // Phone-only composition: keep the bottle/glass substantially smaller
+      // than the tablet/desktop film so the full product scene breathes.
+      // Most phones are <= 430 CSS px; wider phones get a slightly larger fit.
+      const mobileScale = phone
+        ? (window.innerWidth <= 430 ? 0.62 : 0.68)
+        : 1;
+
       const s = mobile
         ? Math.min(cw / iw, ch / ih) * mobileScale
         : Math.max(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
       const x = mobile ? (cw - w) * 0.5 : (cw - w) * fx;
-      const y = mobile ? (ch - h) * 0.5 : (ch - h) * 0.45;
+      const y = mobile
+        ? (ch - h) * (phone ? 0.22 : 0.5)
+        : (ch - h) * 0.45;
 
       ctx.globalAlpha = alpha;
       ctx.drawImage(img, x, y, w, h);
