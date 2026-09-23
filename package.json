@@ -1,0 +1,13 @@
+{
+  "name": "barcode",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BAR CODE — Beverages · Lounge · Venue. Cinematic website for the bar & restaurant in Civil Lines, Prayagraj.",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

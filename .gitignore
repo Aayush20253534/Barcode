@@ -1,0 +1,12 @@
+# Raw Higgsfield renders (keyframes, clips, master film) — kept locally, not needed to serve the site
+_higgsfield/
+
+# Local tooling
+.claude/
+.impeccable/hook.cache.json
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
