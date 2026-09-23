@@ -109,6 +109,43 @@
     const content = $('.hero__content', section);
     const nav = $('.nav');
 
+    // Mobile hero rendering is intentionally self-contained here so the
+    // no-crop fix does not depend on a particular main.css revision.
+    // The portrait sequence is mastered on true black; keep the full phone
+    // hero on the same black and never transform/crop the stage.
+    if (!document.getElementById('hero-phone-full-frame-fix')) {
+      const style = document.createElement('style');
+      style.id = 'hero-phone-full-frame-fix';
+      style.textContent = `
+        @media (max-width: 600px) {
+          .hero,
+          .hero__sticky,
+          .hero__stage,
+          .hero__canvas,
+          .hero__poster {
+            background: #000 !important;
+          }
+
+          .hero__stage {
+            transform: none !important;
+          }
+
+          .hero__stage::after {
+            display: none !important;
+          }
+
+          .hero__poster img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            object-position: 50% 50% !important;
+            background: #000 !important;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     let isStatic = false;
     const goStatic = () => {
       isStatic = true;
@@ -263,47 +300,30 @@
       enqueue(critical);
     }
 
-    // Smartphone composition: portrait frames on screens <= 600 CSS px wide
-    // are contained, scaled down and set a little above centre so the bottle
-    // and glass sit between the navigation and the end-card copy.
+    // Smartphone composition: show the COMPLETE portrait frame. "Contain"
+    // is the only scaling rule here, so no part of the animation is cropped
+    // and there is no artificial 0.56/0.60/0.66 card-like downscaling.
     const PHONE_MAX_W = 600;
-    const PHONE_MAX_H = 0.5; // share of the hero height the frame may fill (short phones)
-    const PHONE_Y = 0.3;     // share of the spare height left above the frame
-    const PHONE_GAP = 16;    // CSS px kept clear of the nav and the end copy
-    // The mobile film itself is mastered against true black. Keep the phone
-    // canvas on the same black level; otherwise the contained 9:16 frame is
-    // visible as a #000 rectangle against the site's #080808 obsidian.
     const PHONE_BG = '#000000';
-    const phoneScale = () => {
-      const vw = window.innerWidth;
-      return vw <= 390 ? 0.56 : vw <= 430 ? 0.6 : 0.66;
-    };
 
     function phoneFit(cw, ch, iw, ih) {
-      const s = Math.min(Math.min(cw / iw, ch / ih) * phoneScale(), ch * PHONE_MAX_H / ih);
+      const s = Math.min(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
-      return { x: (cw - w) * 0.5, y: (ch - h) * PHONE_Y, w, h };
+      return { x: (cw - w) * 0.5, y: (ch - h) * 0.5, w, h };
     }
 
-    // The hold-phase stage move (.hero__stage in CSS) was tuned for tablets;
-    // on phones it is solved here so the settled composition lands between
-    // the nav and the end copy instead of under the nav or over the title.
+    // Do not shrink or lift the entire stage during the hold phase on phones.
+    // The animation itself is already contained in the canvas; transforming
+    // the stage is what makes it read like a separate rectangular card.
     function layoutPhone() {
       if (!phone || !content) {
         sticky.style.removeProperty('--stage-lift');
         sticky.style.removeProperty('--stage-shrink');
         return;
       }
-      const H = sticky.clientHeight;
-      const film = phoneFit(sticky.clientWidth, H, 9, 16); // m frames are 450x800
-      const top = (nav ? nav.offsetHeight : 0) + PHONE_GAP;
-      const room = Math.max(0, content.offsetTop - PHONE_GAP - top);
-      const k = clamp(room / film.h, 0.4, 1);
-      const y = top + Math.max(0, room - film.h * k) * 0.5;
-      const oy = H * 0.2; // transform-origin: 50% 20%
-      sticky.style.setProperty('--stage-lift', (y - oy - (film.y - oy) * k).toFixed(1) + 'px');
-      sticky.style.setProperty('--stage-shrink', (1 - k).toFixed(4));
+      sticky.style.setProperty('--stage-lift', '0px');
+      sticky.style.setProperty('--stage-shrink', '0');
     }
 
     function resize() {
@@ -460,7 +480,9 @@
       }
       ctx.globalAlpha = 1;
 
-      if (phoneRect) blendPhoneFrameEdges(phoneRect);
+      // Do not feather/mask the phone frame. The canvas and hero now share
+      // the sequence's true-black background, so all animation pixels remain
+      // visible while the source rectangle disappears into the page.
 
       // overlay choreography
       const end = smooth(clamp((p - 0.83) / 0.1));
