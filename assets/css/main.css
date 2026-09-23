@@ -845,8 +845,9 @@ section[id], main [id] { scroll-margin-top: 72px; }
 
   /* Hero — dedicated portrait composition */
   .hero { height: 560vh; }
+  /* phones: --stage-lift / --stage-shrink are solved in main.js (layoutPhone) */
   .hero__stage {
-    transform: translate3d(0, calc(var(--hold) * -11%), 0) scale(calc(1 - var(--hold) * .3));
+    transform: translate3d(0, calc(var(--hold) * var(--stage-lift, -11%)), 0) scale(calc(1 - var(--hold) * var(--stage-shrink, .3)));
     will-change: transform;
   }
   .hero__stage::after {

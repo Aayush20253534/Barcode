@@ -106,6 +106,8 @@
     }));
     const hudNum = $('.hud__num', section);
     const hudName = $('.hud__name', section);
+    const content = $('.hero__content', section);
+    const nav = $('.nav');
 
     let isStatic = false;
     const goStatic = () => {
@@ -132,6 +134,7 @@
     let needsDraw = true;
     let shotIndex = -1;
     let failed = 0;
+    let phone = false;
 
     const pickVariant = () => (window.innerWidth / window.innerHeight < 0.9 ? 'm' : 'd');
     const src = (i) => FILM.base[variant] + String(i + 1).padStart(4, '0') + '.webp';
@@ -260,6 +263,45 @@
       enqueue(critical);
     }
 
+    // Smartphone composition: portrait frames on screens <= 600 CSS px wide
+    // are contained, scaled down and set a little above centre so the bottle
+    // and glass sit between the navigation and the end-card copy.
+    const PHONE_MAX_W = 600;
+    const PHONE_MAX_H = 0.5; // share of the hero height the frame may fill (short phones)
+    const PHONE_Y = 0.3;     // share of the spare height left above the frame
+    const PHONE_GAP = 16;    // CSS px kept clear of the nav and the end copy
+    const phoneScale = () => {
+      const vw = window.innerWidth;
+      return vw <= 390 ? 0.56 : vw <= 430 ? 0.6 : 0.66;
+    };
+
+    function phoneFit(cw, ch, iw, ih) {
+      const s = Math.min(Math.min(cw / iw, ch / ih) * phoneScale(), ch * PHONE_MAX_H / ih);
+      const w = iw * s;
+      const h = ih * s;
+      return { x: (cw - w) * 0.5, y: (ch - h) * PHONE_Y, w, h };
+    }
+
+    // The hold-phase stage move (.hero__stage in CSS) was tuned for tablets;
+    // on phones it is solved here so the settled composition lands between
+    // the nav and the end copy instead of under the nav or over the title.
+    function layoutPhone() {
+      if (!phone || !content) {
+        sticky.style.removeProperty('--stage-lift');
+        sticky.style.removeProperty('--stage-shrink');
+        return;
+      }
+      const H = sticky.clientHeight;
+      const film = phoneFit(sticky.clientWidth, H, 9, 16); // m frames are 450x800
+      const top = (nav ? nav.offsetHeight : 0) + PHONE_GAP;
+      const room = Math.max(0, content.offsetTop - PHONE_GAP - top);
+      const k = clamp(room / film.h, 0.4, 1);
+      const y = top + Math.max(0, room - film.h * k) * 0.5;
+      const oy = H * 0.2; // transform-origin: 50% 20%
+      sticky.style.setProperty('--stage-lift', (y - oy - (film.y - oy) * k).toFixed(1) + 'px');
+      sticky.style.setProperty('--stage-shrink', (1 - k).toFixed(4));
+    }
+
     function resize() {
       const w = sticky.clientWidth;
       const h = sticky.clientHeight;
@@ -270,6 +312,8 @@
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       needsDraw = true;
+      phone = variant === 'm' && window.innerWidth <= PHONE_MAX_W;
+      layoutPhone();
     }
 
     function setVariant() {
@@ -294,31 +338,28 @@
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
       if (!iw || !ih) return;
+      ctx.globalAlpha = alpha;
 
-      // Desktop keeps the cinematic edge-to-edge crop. Mobile uses a
+      // Phones: smaller contained composition. Every frame and the end
+      // still go through phoneFit so they line up exactly.
+      if (phone) {
+        const r = phoneFit(cw, ch, iw, ih);
+        ctx.drawImage(img, r.x, r.y, r.w, r.h);
+        return;
+      }
+
+      // Desktop keeps the cinematic edge-to-edge crop. Tablets use a
       // contained portrait composition so the bottle and glass stay fully
       // visible instead of being enlarged by cover-cropping.
       const mobile = variant === 'm';
-      const phone = mobile && window.innerWidth <= 600;
-
-      // Phone-only composition: keep the bottle/glass substantially smaller
-      // than the tablet/desktop film so the full product scene breathes.
-      // Most phones are <= 430 CSS px; wider phones get a slightly larger fit.
-      const mobileScale = phone
-        ? (window.innerWidth <= 430 ? 0.62 : 0.68)
-        : 1;
-
       const s = mobile
-        ? Math.min(cw / iw, ch / ih) * mobileScale
+        ? Math.min(cw / iw, ch / ih)
         : Math.max(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
       const x = mobile ? (cw - w) * 0.5 : (cw - w) * fx;
-      const y = mobile
-        ? (ch - h) * (phone ? 0.22 : 0.5)
-        : (ch - h) * 0.45;
+      const y = mobile ? (ch - h) * 0.5 : (ch - h) * 0.45;
 
-      ctx.globalAlpha = alpha;
       ctx.drawImage(img, x, y, w, h);
     }
 
@@ -429,7 +470,11 @@
       clearTimeout(rt);
       rt = setTimeout(() => { setVariant(); resize(); }, 120);
     };
-    if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(sticky);
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(onResize).observe(sticky);
+      // the end copy reflows with web fonts and rotation; keep the phone hold layout in step
+      if (content) new ResizeObserver(() => layoutPhone()).observe(content);
+    }
     window.addEventListener('orientationchange', onResize);
 
     return { section, update, bottom: () => section.offsetTop + section.offsetHeight };
