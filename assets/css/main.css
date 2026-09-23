@@ -140,17 +140,12 @@ section[id], main [id] { scroll-margin-top: 72px; }
   transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out);
   transition-delay: calc(var(--d, 0) * .1s);
 }
+/* Images stay visible even if the reveal observer fails or loads late. */
 .js [data-reveal="image"] .frame {
-  clip-path: inset(100% 0 0 0);
+  clip-path: none;
 }
-.js [data-reveal="image"] .frame img { scale: 1.18; }
-.js [data-reveal="image"].is-in .frame {
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 1.6s var(--ease-io);
-}
-.js [data-reveal="image"].is-in .frame img {
+.js [data-reveal="image"] .frame img {
   scale: 1;
-  transition: scale 2.2s var(--ease-out);
 }
 
 /* ---------- Buttons & links ---------- */
