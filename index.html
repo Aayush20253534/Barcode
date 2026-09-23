@@ -73,6 +73,45 @@
         "priceRange": "₹400–1,200 per person",
         "servesCuisine": ["Indian", "Indo-Chinese"],
         "acceptsReservations": true,
+        "hasMenu": {
+          "@type": "Menu",
+          "@id": "https://YOUR-DOMAIN.example/#menu",
+          "name": "BAR CODE Food & Drinks Menu",
+          "description": "Food and drinks currently featured at BAR CODE in Civil Lines, Prayagraj.",
+          "inLanguage": "en-IN",
+          "hasMenuSection": [
+            {
+              "@type": "MenuSection",
+              "name": "Drinks",
+              "hasMenuItem": [
+                { "@type": "MenuItem", "name": "Beer" },
+                { "@type": "MenuItem", "name": "Cider" },
+                { "@type": "MenuItem", "name": "Mojitos" },
+                { "@type": "MenuItem", "name": "Cocktails" }
+              ]
+            },
+            {
+              "@type": "MenuSection",
+              "name": "Popular Food",
+              "hasMenuItem": [
+                { "@type": "MenuItem", "name": "Chilli Chicken" },
+                { "@type": "MenuItem", "name": "Chilli Potato" }
+              ]
+            },
+            {
+              "@type": "MenuSection",
+              "name": "From the Kitchen",
+              "hasMenuItem": [
+                { "@type": "MenuItem", "name": "Butter Paneer" },
+                { "@type": "MenuItem", "name": "Dal Makhni" },
+                { "@type": "MenuItem", "name": "Kadai Curries" },
+                { "@type": "MenuItem", "name": "Chicken Tikka" },
+                { "@type": "MenuItem", "name": "Wood-fired Pizza" },
+                { "@type": "MenuItem", "name": "Naan & Roti" }
+              ]
+            }
+          ]
+        },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Civil Lines",
@@ -313,31 +352,31 @@
     </section>
 
     <!-- ===== 04 · DRINKS ===== -->
-    <section class="drinks" id="drinks">
+    <section class="drinks" id="drinks" aria-label="BAR CODE drinks menu in Civil Lines, Prayagraj">
       <div class="drinks__pin">
         <div class="drinks__track">
           <div class="drinks__intro">
-            <p class="kicker" data-reveal><span class="kicker__num">03</span>Drinks</p>
+            <p class="kicker" data-reveal><span class="kicker__num">03</span>Drinks Menu</p>
             <h2 class="display" data-reveal="lines">
               <span class="line"><span>Crafted</span></span>
               <span class="line"><span><em>after dark.</em></span></span>
             </h2>
-            <p class="body" data-reveal>A full bar in Civil Lines, poured with care — from cold beer to the cocktail you came for.</p>
+            <p class="body" data-reveal>Explore BAR CODE's drinks menu in Civil Lines, Prayagraj — cold beer, cider, mojitos and cocktails poured for the evening.</p>
             <p class="drinks__list" data-reveal>Beer <i>·</i> Cider <i>·</i> Mojitos <i>·</i> Cocktails</p>
             <p class="drinks__hint" aria-hidden="true"><span class="drinks__hint-desk">Keep scrolling</span><span class="drinks__hint-touch">Swipe</span><svg><use href="#i-arrow"/></svg></p>
           </div>
 
-          <div class="drinks__rail" tabindex="0" aria-label="Drinks photographs">
+          <div class="drinks__rail" tabindex="0" aria-label="BAR CODE drinks menu photographs">
             <figure class="drink">
-              <div class="frame"><img src="assets/img/drink-beer-1120.webp" srcset="assets/img/drink-beer-640.webp 640w, assets/img/drink-beer-1120.webp 1120w" sizes="(min-width: 1024px) 34vw, 78vw" width="1120" height="1400" loading="lazy" decoding="async" alt="A chilled glass mug of beer on a BAR CODE table, a red neon sign reading 'good food, beer, good company, good times' behind it."></div>
+              <div class="frame"><img src="assets/img/drink-beer-1120.webp" srcset="assets/img/drink-beer-640.webp 640w, assets/img/drink-beer-1120.webp 1120w" sizes="(min-width: 1024px) 34vw, 78vw" width="1120" height="1400" loading="lazy" decoding="async" alt="A chilled glass mug of beer at BAR CODE bar in Civil Lines, Prayagraj, with red neon behind it."></div>
               <figcaption><span class="drink__no">No. 01</span><span class="drink__name">Beer</span></figcaption>
             </figure>
             <figure class="drink drink--low">
-              <div class="frame"><img src="assets/img/drink-mojito-680.webp" srcset="assets/img/drink-mojito-440.webp 440w, assets/img/drink-mojito-680.webp 680w" sizes="(min-width: 1024px) 26vw, 78vw" width="680" height="1020" loading="lazy" decoding="async" alt="A tall mojito with lime wedges, mint and a lime wheel on the rim."></div>
+              <div class="frame"><img src="assets/img/drink-mojito-680.webp" srcset="assets/img/drink-mojito-440.webp 440w, assets/img/drink-mojito-680.webp 680w" sizes="(min-width: 1024px) 26vw, 78vw" width="680" height="1020" loading="lazy" decoding="async" alt="A mojito with lime and mint from the drinks menu at BAR CODE in Prayagraj."></div>
               <figcaption><span class="drink__no">No. 02</span><span class="drink__name">Mojito</span></figcaption>
             </figure>
             <figure class="drink">
-              <div class="frame"><img src="assets/img/drink-tall-1080.webp" srcset="assets/img/drink-tall-640.webp 640w, assets/img/drink-tall-1080.webp 1080w" sizes="(min-width: 1024px) 32vw, 78vw" width="1080" height="1440" loading="lazy" decoding="async" alt="A tall iced drink in a cylinder glass beside a plate of bar snacks, a red 'Club' neon sign glowing behind."></div>
+              <div class="frame"><img src="assets/img/drink-tall-1080.webp" srcset="assets/img/drink-tall-640.webp 640w, assets/img/drink-tall-1080.webp 1080w" sizes="(min-width: 1024px) 32vw, 78vw" width="1080" height="1440" loading="lazy" decoding="async" alt="A tall iced drink with bar snacks at BAR CODE bar and restaurant in Civil Lines, Prayagraj."></div>
               <figcaption><span class="drink__no">No. 03</span><span class="drink__name">From the bar</span></figcaption>
             </figure>
             <div class="drinks__outro">
@@ -353,23 +392,23 @@
     </section>
 
     <!-- ===== 05 · FOOD ===== -->
-    <section class="food section" id="food">
+    <section class="food section" id="food" aria-label="BAR CODE restaurant food menu in Civil Lines, Prayagraj">
       <div class="wrap">
         <header class="section-head section-head--split">
           <div>
-            <p class="kicker" data-reveal><span class="kicker__num">04</span>The Kitchen</p>
+            <p class="kicker" data-reveal><span class="kicker__num">04</span>Restaurant Menu</p>
             <h2 class="display" data-reveal="lines">
               <span class="line"><span>From the</span></span>
               <span class="line"><span><em>kitchen.</em></span></span>
             </h2>
           </div>
-          <p class="body section-head__aside" data-reveal>Restaurant favourites from the tandoor and wok — food made to be shared between rounds.</p>
+          <p class="body section-head__aside" data-reveal>Explore BAR CODE's restaurant menu in Civil Lines, Prayagraj — tandoor favourites, wok-fired dishes, curries, paneer, pizza, naan and more.</p>
         </header>
       </div>
 
       <figure class="food__hero" data-reveal="image">
         <div class="frame">
-          <img data-parallax="0.1" src="assets/img/food-chilli-1536.webp" srcset="assets/img/food-chilli-900.webp 900w, assets/img/food-chilli-1536.webp 1536w" sizes="100vw" width="1536" height="1024" loading="lazy" decoding="async" alt="Chilli Chicken tossed with peppers, spring onion and sesame on a long white plate.">
+          <img data-parallax="0.1" src="assets/img/food-chilli-1536.webp" srcset="assets/img/food-chilli-900.webp 900w, assets/img/food-chilli-1536.webp 1536w" sizes="100vw" width="1536" height="1024" loading="lazy" decoding="async" alt="Chilli Chicken with peppers, spring onion and sesame at BAR CODE restaurant in Civil Lines, Prayagraj.">
         </div>
         <figcaption class="food__hero-cap">
           <span class="kicker">Guest favourite</span>
@@ -380,11 +419,11 @@
       <div class="wrap">
         <div class="food__grid">
           <figure class="food__a frame-fig" data-reveal="image">
-            <div class="frame"><img data-parallax="0.07" src="assets/img/food-tikka-1440.webp" srcset="assets/img/food-tikka-800.webp 800w, assets/img/food-tikka-1440.webp 1440w" sizes="(min-width: 900px) 56vw, 100vw" width="1440" height="1080" loading="lazy" decoding="async" alt="Charred tikka pieces on a black slate plate, fresh from the tandoor."></div>
+            <div class="frame"><img data-parallax="0.07" src="assets/img/food-tikka-1440.webp" srcset="assets/img/food-tikka-800.webp 800w, assets/img/food-tikka-1440.webp 1440w" sizes="(min-width: 900px) 56vw, 100vw" width="1440" height="1080" loading="lazy" decoding="async" alt="Charred Chicken Tikka from the tandoor at BAR CODE restaurant in Prayagraj."></div>
             <figcaption><span>04.1</span>From the tandoor</figcaption>
           </figure>
           <figure class="food__b frame-fig" data-reveal="image">
-            <div class="frame"><img data-parallax="0.09" src="assets/img/food-spread-1080.webp" srcset="assets/img/food-spread-640.webp 640w, assets/img/food-spread-1080.webp 1080w" sizes="(min-width: 900px) 32vw, 100vw" width="1080" height="1440" loading="lazy" decoding="async" alt="A table set with bowls of curry and dal, and baskets of naan and roti, beside a window."></div>
+            <div class="frame"><img data-parallax="0.09" src="assets/img/food-spread-1080.webp" srcset="assets/img/food-spread-640.webp 640w, assets/img/food-spread-1080.webp 1080w" sizes="(min-width: 900px) 32vw, 100vw" width="1080" height="1440" loading="lazy" decoding="async" alt="Curries, dal, naan and roti from the food menu at BAR CODE in Civil Lines, Prayagraj."></div>
             <figcaption><span>04.2</span>Curries, naan &amp; roti</figcaption>
           </figure>
           <div class="food__index">
@@ -398,11 +437,11 @@
             </div>
           </div>
           <figure class="food__c frame-fig" data-reveal="image">
-            <div class="frame"><img data-parallax="0.08" src="assets/img/food-paneer-880.webp" srcset="assets/img/food-paneer-560.webp 560w, assets/img/food-paneer-880.webp 880w" sizes="(min-width: 900px) 24vw, 100vw" width="880" height="1320" loading="lazy" decoding="async" alt="A paneer curry served with two pieces of herbed naan on a dark plate."></div>
+            <div class="frame"><img data-parallax="0.08" src="assets/img/food-paneer-880.webp" srcset="assets/img/food-paneer-560.webp 560w, assets/img/food-paneer-880.webp 880w" sizes="(min-width: 900px) 24vw, 100vw" width="880" height="1320" loading="lazy" decoding="async" alt="Paneer curry with herbed naan at BAR CODE restaurant in Civil Lines, Prayagraj."></div>
             <figcaption><span>04.3</span>Paneer &amp; naan</figcaption>
           </figure>
           <figure class="food__d frame-fig" data-reveal="image">
-            <div class="frame"><img data-parallax="0.1" src="assets/img/food-curry-1080.webp" srcset="assets/img/food-curry-640.webp 640w, assets/img/food-curry-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 100vw" width="1080" height="1440" loading="lazy" decoding="async" alt="A rich curry in a black bowl, garnished with onion rings, coriander and broccoli, on a wooden table."></div>
+            <div class="frame"><img data-parallax="0.1" src="assets/img/food-curry-1080.webp" srcset="assets/img/food-curry-640.webp 640w, assets/img/food-curry-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 100vw" width="1080" height="1440" loading="lazy" decoding="async" alt="A rich curry from the BAR CODE restaurant menu in Civil Lines, Prayagraj."></div>
             <figcaption><span>04.4</span>Curries</figcaption>
           </figure>
         </div>
@@ -448,11 +487,11 @@
             <span class="g-item__cap"><span>Interior</span>The lounge &amp; dance floor</span>
           </button>
           <button type="button" class="g-item" data-cat="drinks" data-full="assets/img/drink-beer-1120.webp" data-caption="Beer, under the neon">
-            <img src="assets/img/drink-beer-640.webp" width="640" height="800" loading="lazy" decoding="async" alt="A chilled mug of beer under a red neon sign.">
+            <img src="assets/img/drink-beer-640.webp" width="640" height="800" loading="lazy" decoding="async" alt="A chilled mug of beer at BAR CODE bar in Civil Lines, Prayagraj.">
             <span class="g-item__cap"><span>Drinks</span>Beer, under the neon</span>
           </button>
           <button type="button" class="g-item" data-cat="food" data-full="assets/img/food-curry-1080.webp" data-caption="Curry">
-            <img src="assets/img/food-curry-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="A curry in a black bowl on a wooden table.">
+            <img src="assets/img/food-curry-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="Curry from the BAR CODE restaurant menu in Civil Lines, Prayagraj.">
             <span class="g-item__cap"><span>Food</span>Curry</span>
           </button>
           <button type="button" class="g-item" data-cat="exterior" data-full="assets/img/ext-night-940.webp" data-caption="Civil Lines, after dark">
@@ -464,7 +503,7 @@
             <span class="g-item__cap"><span>Interior</span>A live set in the dining room</span>
           </button>
           <button type="button" class="g-item" data-cat="food" data-full="assets/img/food-tikka-1440.webp" data-caption="From the tandoor">
-            <img src="assets/img/food-tikka-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="Charred tikka on a black slate plate.">
+            <img src="assets/img/food-tikka-800.webp" width="800" height="600" loading="lazy" decoding="async" alt="Charred Chicken Tikka from the tandoor at BAR CODE restaurant in Prayagraj.">
             <span class="g-item__cap"><span>Food</span>From the tandoor</span>
           </button>
           <button type="button" class="g-item" data-cat="bar" data-full="assets/img/atmos-bar-1440.webp" data-caption="The bar">
@@ -472,15 +511,15 @@
             <span class="g-item__cap"><span>Bar</span>The bar</span>
           </button>
           <button type="button" class="g-item" data-cat="drinks" data-full="assets/img/drink-tall-1080.webp" data-caption="From the bar">
-            <img src="assets/img/drink-tall-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="A tall iced drink in a cylinder glass.">
+            <img src="assets/img/drink-tall-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="A tall iced drink from the bar at BAR CODE in Civil Lines, Prayagraj.">
             <span class="g-item__cap"><span>Drinks</span>From the bar</span>
           </button>
           <button type="button" class="g-item" data-cat="food" data-full="assets/img/food-spread-1080.webp" data-caption="Curries, naan &amp; roti">
-            <img src="assets/img/food-spread-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="Bowls of curry and dal with baskets of naan and roti.">
+            <img src="assets/img/food-spread-640.webp" width="640" height="853" loading="lazy" decoding="async" alt="Curries, dal, naan and roti at BAR CODE restaurant in Civil Lines, Prayagraj.">
             <span class="g-item__cap"><span>Food</span>Curries, naan &amp; roti</span>
           </button>
           <button type="button" class="g-item" data-cat="drinks" data-full="assets/img/drink-mojito-680.webp" data-caption="Mojito">
-            <img src="assets/img/drink-mojito-440.webp" width="440" height="660" loading="lazy" decoding="async" alt="A tall mojito with lime and mint.">
+            <img src="assets/img/drink-mojito-440.webp" width="440" height="660" loading="lazy" decoding="async" alt="A mojito with lime and mint at BAR CODE bar in Prayagraj.">
             <span class="g-item__cap"><span>Drinks</span>Mojito</span>
           </button>
           <button type="button" class="g-item" data-cat="exterior" data-full="assets/img/ext-day-1080.webp" data-caption="BAR CODE, Civil Lines">
@@ -488,11 +527,11 @@
             <span class="g-item__cap"><span>Exterior</span>BAR CODE, Civil Lines</span>
           </button>
           <button type="button" class="g-item" data-cat="food" data-full="assets/img/food-chilli-1536.webp" data-caption="Chilli Chicken">
-            <img src="assets/img/food-chilli-900.webp" width="900" height="600" loading="lazy" decoding="async" alt="Chilli Chicken on a long white plate.">
+            <img src="assets/img/food-chilli-900.webp" width="900" height="600" loading="lazy" decoding="async" alt="Chilli Chicken at BAR CODE restaurant in Civil Lines, Prayagraj.">
             <span class="g-item__cap"><span>Food</span>Chilli Chicken</span>
           </button>
           <button type="button" class="g-item" data-cat="food" data-full="assets/img/food-paneer-880.webp" data-caption="Paneer &amp; naan">
-            <img src="assets/img/food-paneer-560.webp" width="560" height="840" loading="lazy" decoding="async" alt="Paneer curry with herbed naan.">
+            <img src="assets/img/food-paneer-560.webp" width="560" height="840" loading="lazy" decoding="async" alt="Paneer curry with herbed naan at BAR CODE restaurant in Prayagraj.">
             <span class="g-item__cap"><span>Food</span>Paneer &amp; naan</span>
           </button>
         </div>
