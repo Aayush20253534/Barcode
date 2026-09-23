@@ -270,7 +270,10 @@
     const PHONE_MAX_H = 0.5; // share of the hero height the frame may fill (short phones)
     const PHONE_Y = 0.3;     // share of the spare height left above the frame
     const PHONE_GAP = 16;    // CSS px kept clear of the nav and the end copy
-    const PHONE_BG = '#080808';
+    // The mobile film itself is mastered against true black. Keep the phone
+    // canvas on the same black level; otherwise the contained 9:16 frame is
+    // visible as a #000 rectangle against the site's #080808 obsidian.
+    const PHONE_BG = '#000000';
     const phoneScale = () => {
       const vw = window.innerWidth;
       return vw <= 390 ? 0.56 : vw <= 430 ? 0.6 : 0.66;
