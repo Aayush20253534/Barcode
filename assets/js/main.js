@@ -20,6 +20,11 @@
   const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const conn = navigator.connection || {};
   const SAVE_DATA = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '');
+  const SLOW_NETWORK = SAVE_DATA || /3g$/.test(conn.effectiveType || '');
+  const runIdle = (fn, timeout = 1200) => {
+    if ('requestIdleCallback' in window) return window.requestIdleCallback(fn, { timeout });
+    return window.setTimeout(fn, Math.min(timeout, 600));
+  };
 
   // The film always starts from darkness unless a section was deep-linked
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -145,25 +150,82 @@
       return order;
     }
 
+    let prioritizeFrames = () => {};
+    let requestEndFrame = () => {};
     function load() {
       const my = ++token;
       frames = new Array(N).fill(null);
-      endImg = new Image();
-      endImg.decoding = 'async';
-      endImg.src = FILM.end[variant];
+      endImg = null;
 
-      const finest = (SAVE_DATA || (variant === 'm' && /3g$/.test(conn.effectiveType || ''))) ? 2 : 1;
-      const order = buildOrder(finest);
-      const first = new Set(order.filter((i) => i % 12 === 0 || i === N - 1));
-      let firstLoaded = 0;
-      let cursor = 0;
+      const finest = SAVE_DATA ? 4 : SLOW_NETWORK ? 3 : variant === 'm' ? 2 : 1;
+      const critical = buildOrder(24);
+      const medium = buildOrder(6);
+      const full = buildOrder(finest);
+      const criticalPending = new Set(critical);
+      const queued = new Uint8Array(N);
+      const inFlight = new Uint8Array(N);
+      const loaded = new Uint8Array(N);
+      let queue = [];
       let active = 0;
-      const CONCURRENCY = 6;
+      let criticalSettled = 0;
+      let criticalReady = false;
+      let endRequested = false;
+      let backfillScheduled = false;
+      const CONCURRENCY = SAVE_DATA ? 2 : SLOW_NETWORK ? 3 : 4;
+
+      requestEndFrame = () => {
+        if (my !== token || endRequested) return;
+        endRequested = true;
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = FILM.end[variant];
+        endImg = img;
+      };
+
+      const enqueue = (indices, priority = false) => {
+        if (my !== token) return;
+        const add = [];
+        for (const i of indices) {
+          if (i < 0 || i >= N || loaded[i] || queued[i] || inFlight[i]) continue;
+          queued[i] = 1;
+          add.push(i);
+        }
+        if (!add.length) return;
+        queue = priority ? add.concat(queue) : queue.concat(add);
+        pump();
+      };
+
+      prioritizeFrames = (center) => {
+        if (!criticalReady) return;
+        const nearby = [center];
+        for (let d = 1; d <= 6; d++) {
+          nearby.push(center + d, center - d);
+        }
+        enqueue(nearby, true);
+      };
+
+      const scheduleBackfill = () => {
+        if (backfillScheduled || my !== token) return;
+        backfillScheduled = true;
+        runIdle(() => {
+          if (my !== token) return;
+          enqueue(medium);
+          requestEndFrame();
+        }, 900);
+        if (!SAVE_DATA) {
+          window.setTimeout(() => runIdle(() => {
+            if (my === token) enqueue(full);
+          }, 1800), 2200);
+        }
+      };
 
       const pump = () => {
         if (my !== token) return;
-        while (active < CONCURRENCY && cursor < order.length) {
-          const i = order[cursor++];
+        while (active < CONCURRENCY && queue.length) {
+          const i = queue.shift();
+          queued[i] = 0;
+          if (loaded[i] || inFlight[i]) continue;
+          inFlight[i] = 1;
           active++;
           const img = new Image();
           img.decoding = 'async';
@@ -171,11 +233,22 @@
           const settle = (ok) => {
             active--;
             if (my !== token) return;
-            if (ok) { frames[i] = img; needsDraw = true; } else { failed++; }
-            if (first.has(i)) {
-              firstLoaded++;
-              loader.set(firstLoaded / first.size);
-              if (firstLoaded === first.size) loader.finish();
+            inFlight[i] = 0;
+            loaded[i] = 1;
+            if (ok) {
+              frames[i] = img;
+              needsDraw = true;
+            } else {
+              failed++;
+            }
+            if (criticalPending.delete(i)) {
+              criticalSettled++;
+              loader.set(criticalSettled / critical.length);
+              if (criticalSettled === critical.length) {
+                criticalReady = true;
+                loader.finish();
+                scheduleBackfill();
+              }
             }
             if (i === 0 && !ok) { goStatic(); loader.finish(); token++; return; }
             pump();
@@ -184,7 +257,7 @@
           p.then(() => settle(true), () => settle(img.complete && img.naturalWidth > 0));
         }
       };
-      pump();
+      enqueue(critical);
     }
 
     function resize() {
@@ -243,6 +316,9 @@
       const f = film * (N - 1);
       const i0 = Math.min(N - 1, Math.floor(f));
       const t = f - i0;
+      prioritizeFrames(i0);
+      if (film > 0.72 || hold > 0) requestEndFrame();
+
       const a = nearest(i0);
       const fx = focusX(film);
 
