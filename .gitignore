@@ -13,3 +13,6 @@ desktop.ini
 
 *.patch
 *.zip
+
+# Private/local SEO follow-up checklist (contains owner-dependent details)
+followup.txt

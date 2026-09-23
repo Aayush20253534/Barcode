@@ -5,6 +5,11 @@
       "source": "/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/review",
+      "destination": "https://maps.app.goo.gl/Z3TZSX3knZTzHcgb6",
+      "permanent": false
     }
   ],
   "headers": [
