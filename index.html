@@ -3,14 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>BAR CODE — Beverages · Lounge · Venue | Civil Lines, Prayagraj</title>
-  <meta name="description" content="BAR CODE — a premium bar &amp; restaurant in Civil Lines, Prayagraj, crafted for unforgettable evenings. Good drinks, good food, good nights. Reserve your table on WhatsApp.">
+  <title>BAR CODE Prayagraj | Bar &amp; Grill in Civil Lines</title>
+  <meta name="description" content="BAR CODE is a bar &amp; grill in Civil Lines, Prayagraj with crafted drinks, food, live music and a lounge atmosphere. View details and reserve on WhatsApp.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="theme-color" content="#080808">
   <meta name="color-scheme" content="dark">
+
+  <!-- SEO: replace YOUR-DOMAIN.example with the final production domain before indexing. -->
+  <link rel="canonical" href="https://YOUR-DOMAIN.example/">
+
   <meta property="og:type" content="website">
-  <meta property="og:title" content="BAR CODE — Where the night meets the experience.">
-  <meta property="og:description" content="A premium bar &amp; restaurant in Civil Lines, Prayagraj, crafted for unforgettable evenings.">
-  <meta property="og:image" content="assets/hero/poster-d.webp">
+  <meta property="og:site_name" content="BAR CODE">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:title" content="BAR CODE Prayagraj | Bar &amp; Grill in Civil Lines">
+  <meta property="og:description" content="BAR CODE is a bar &amp; grill in Civil Lines, Prayagraj with crafted drinks, food, live music and a lounge atmosphere.">
+  <meta property="og:url" content="https://YOUR-DOMAIN.example/">
+  <meta property="og:image" content="https://YOUR-DOMAIN.example/assets/hero/poster-d.webp">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="BAR CODE bar and lounge in Civil Lines, Prayagraj">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BAR CODE Prayagraj | Bar &amp; Grill in Civil Lines">
+  <meta name="twitter:description" content="BAR CODE is a bar &amp; grill in Civil Lines, Prayagraj with crafted drinks, food, live music and a lounge atmosphere.">
+  <meta name="twitter:image" content="https://YOUR-DOMAIN.example/assets/hero/poster-d.webp">
+  <meta name="twitter:image:alt" content="BAR CODE bar and lounge in Civil Lines, Prayagraj">
   <link rel="icon" type="image/png" href="assets/logo/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
@@ -25,26 +42,103 @@
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <noscript><style>.loader{display:none!important}</style></noscript>
 
+  <!-- Local entity data. Keep address, phone and hours aligned with the Google Business Profile. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "BarOrPub",
-    "name": "BAR CODE",
-    "alternateName": "बार कोड",
-    "slogan": "Beverages | Lounge | Venue",
-    "image": "assets/hero/poster-d.webp",
-    "telephone": "+91 98380 70333",
-    "priceRange": "₹400–1,200 per person",
-    "servesCuisine": ["Indian", "Indo-Chinese"],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Civil Lines",
-      "addressLocality": "Prayagraj",
-      "addressRegion": "Uttar Pradesh",
-      "postalCode": "211001",
-      "addressCountry": "IN"
-    },
-    "hasMap": "https://maps.app.goo.gl/Z3TZSX3knZTzHcgb6"
+    "@graph": [
+      {
+        "@type": ["BarOrPub", "Restaurant"],
+        "@id": "https://YOUR-DOMAIN.example/#business",
+        "name": "BAR CODE",
+        "alternateName": ["Bar Code", "बार कोड"],
+        "slogan": "Beverages | Lounge | Venue",
+        "description": "BAR CODE is a bar & grill in Civil Lines, Prayagraj with crafted drinks, food, live music and a lounge atmosphere.",
+        "url": "https://YOUR-DOMAIN.example/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://YOUR-DOMAIN.example/#logo",
+          "url": "https://YOUR-DOMAIN.example/assets/logo/barcode-logo-512.webp",
+          "contentUrl": "https://YOUR-DOMAIN.example/assets/logo/barcode-logo-512.webp",
+          "width": 512,
+          "height": 512
+        },
+        "image": [
+          "https://YOUR-DOMAIN.example/assets/hero/poster-d.webp",
+          "https://YOUR-DOMAIN.example/assets/img/atmos-bar-1440.webp",
+          "https://YOUR-DOMAIN.example/assets/img/atmos-lounge-1600.webp",
+          "https://YOUR-DOMAIN.example/assets/img/ext-night-940.webp"
+        ],
+        "telephone": "+919838070333",
+        "priceRange": "₹400–1,200 per person",
+        "servesCuisine": ["Indian", "Indo-Chinese"],
+        "acceptsReservations": true,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Civil Lines",
+          "addressLocality": "Prayagraj",
+          "addressRegion": "Uttar Pradesh",
+          "postalCode": "211001",
+          "addressCountry": "IN"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Prayagraj"
+        },
+        "hasMap": "https://maps.app.goo.gl/Z3TZSX3knZTzHcgb6",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "12:00",
+            "closes": "23:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Thursday",
+            "opens": "17:00",
+            "closes": "23:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.tripadvisor.in/Restaurant_Review-g1162488-d14136366-Reviews-BarCode-Prayagraj_Prayagraj_District_Uttar_Pradesh.html"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://YOUR-DOMAIN.example/#website",
+        "url": "https://YOUR-DOMAIN.example/",
+        "name": "BAR CODE",
+        "publisher": {
+          "@id": "https://YOUR-DOMAIN.example/#business"
+        },
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://YOUR-DOMAIN.example/#webpage",
+        "url": "https://YOUR-DOMAIN.example/",
+        "name": "BAR CODE Prayagraj | Bar & Grill in Civil Lines",
+        "isPartOf": {
+          "@id": "https://YOUR-DOMAIN.example/#website"
+        },
+        "about": {
+          "@id": "https://YOUR-DOMAIN.example/#business"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://YOUR-DOMAIN.example/assets/hero/poster-d.webp"
+        },
+        "inLanguage": "en-IN"
+      }
+    ]
   }
   </script>
 </head>
