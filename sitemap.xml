@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SEO: replace YOUR-DOMAIN.example with the final production domain before indexing. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://YOUR-DOMAIN.example/</loc>
-  </url>
+  <url><loc>https://YOUR-DOMAIN.example/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/menu/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/events/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/venue/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/gallery/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/visit/</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/about/</loc></url>
 </urlset>
