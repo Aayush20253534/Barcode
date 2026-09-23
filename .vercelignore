@@ -1,8 +1,8 @@
 # Local/source assets not required by the production website
-img/
-_higgsfield/
-.impeccable/
-.claude/
+/img/
+/_higgsfield/
+/.impeccable/
+/.claude/
 
 # Repository/development-only files
 details.txt
