@@ -299,8 +299,10 @@
       // contained portrait composition so the bottle and glass stay fully
       // visible instead of being enlarged by cover-cropping.
       const mobile = variant === 'm';
+      const phone = mobile && window.innerWidth <= 600;
+      const mobileScale = phone ? 0.84 : 1;
       const s = mobile
-        ? Math.min(cw / iw, ch / ih)
+        ? Math.min(cw / iw, ch / ih) * mobileScale
         : Math.max(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
