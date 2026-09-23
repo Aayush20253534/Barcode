@@ -294,11 +294,21 @@
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
       if (!iw || !ih) return;
-      const s = Math.max(cw / iw, ch / ih);
+
+      // Desktop keeps the cinematic edge-to-edge crop. Mobile uses a
+      // contained portrait composition so the bottle and glass stay fully
+      // visible instead of being enlarged by cover-cropping.
+      const mobile = variant === 'm';
+      const s = mobile
+        ? Math.min(cw / iw, ch / ih)
+        : Math.max(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
+      const x = mobile ? (cw - w) * 0.5 : (cw - w) * fx;
+      const y = mobile ? (ch - h) * 0.5 : (ch - h) * 0.45;
+
       ctx.globalAlpha = alpha;
-      ctx.drawImage(img, (cw - w) * fx, (ch - h) * 0.45, w, h);
+      ctx.drawImage(img, x, y, w, h);
     }
 
     function nearest(i) {
@@ -321,6 +331,14 @@
 
       const a = nearest(i0);
       const fx = focusX(film);
+
+      // Contained mobile frames can leave unused canvas space. Clear it
+      // before drawing so those areas stay clean black between frames.
+      if (variant === 'm') {
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#080808';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
       if (a >= 0) {
         drawCover(frames[a], 1, fx);
