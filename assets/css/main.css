@@ -463,7 +463,10 @@ section[id], main [id] { scroll-margin-top: 72px; }
 .no-js .hero__opening, .no-js .hero__whisper, .no-js .hero__hud, .no-js .hero__cue, .no-js .hero__rail { display: none; }
 
 /* ---------- EXPERIENCE ---------- */
-.experience { background: var(--obsidian); }
+.experience {
+  background: var(--obsidian);
+  padding-bottom: clamp(38.4px, 5.6vw, 88px);
+}
 .experience::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(60% 50% at 85% 20%, rgba(107, 69, 32, .16), transparent 70%);
@@ -506,7 +509,10 @@ section[id], main [id] { scroll-margin-top: 72px; }
 }
 
 /* ---------- ATMOSPHERE ---------- */
-.atmos { background: linear-gradient(180deg, var(--obsidian), var(--charcoal) 60%, var(--obsidian)); }
+.atmos {
+  background: linear-gradient(180deg, var(--obsidian), var(--charcoal) 60%, var(--obsidian));
+  padding-top: clamp(38.4px, 5.6vw, 88px);
+}
 .section-head { margin-bottom: clamp(64px, 9vw, 140px); }
 .section-head--split { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
 .section-head__aside { max-width: 26em; padding-bottom: .6em; }
