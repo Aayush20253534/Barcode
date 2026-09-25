@@ -793,6 +793,8 @@ section[id], main [id] { scroll-margin-top: 72px; }
 }
 .footer__links a:hover { color: var(--gold); }
 .footer__legal { margin-top: 26px; font-size: .72rem; color: rgba(155, 150, 141, .8); letter-spacing: .02em; }
+.footer__credit { color: var(--ivory-80); border-bottom: 1px solid rgba(201, 168, 106, .35); transition: color .4s, border-color .4s; }
+.footer__credit:hover { color: var(--gold); border-color: var(--gold); }
 
 /* ---------- Mobile reserve bar ---------- */
 .m-reserve { display: none; }
