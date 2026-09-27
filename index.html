@@ -54,6 +54,9 @@
         "slogan": "Beverages | Lounge | Venue",
         "description": "BAR CODE is a bar, restaurant, lounge and party venue in Civil Lines, Prayagraj with crafted drinks, food, live music and a dance floor.",
         "url": "https://thebarcode.in/",
+        "mainEntityOfPage": {
+          "@id": "https://thebarcode.in/#webpage"
+        },
         "logo": {
           "@type": "ImageObject",
           "@id": "https://thebarcode.in/#logo",
@@ -72,6 +75,22 @@
         "priceRange": "₹400–1,200 per person",
         "servesCuisine": ["Indian", "Indo-Chinese"],
         "acceptsReservations": true,
+        "potentialAction": {
+          "@type": "ReserveAction",
+          "name": "Reserve a table at BAR CODE",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://wa.me/919838070333?text=Hello%20BAR%20CODE%2C%20I%E2%80%99d%20like%20to%20reserve%20a%20table.%20Please%20share%20the%20available%20options.",
+            "actionPlatform": [
+              "https://schema.org/DesktopWebPlatform",
+              "https://schema.org/MobileWebPlatform"
+            ]
+          },
+          "result": {
+            "@type": "FoodEstablishmentReservation",
+            "name": "Table reservation"
+          }
+        },
         "hasMenu": {
           "@type": "Menu",
           "@id": "https://thebarcode.in/#menu",
@@ -123,6 +142,23 @@
           "@type": "City",
           "name": "Prayagraj"
         },
+        "amenityFeature": [
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Wheelchair-accessible restroom",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Live music",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Dance floor",
+            "value": true
+          }
+        ],
         "hasMap": "https://maps.app.goo.gl/e4X6qm3U9cP8piPL7",
         "openingHoursSpecification": [
           {
@@ -166,6 +202,9 @@
         "name": "BAR CODE Prayagraj | Bar, Restaurant & Party Venue",
         "isPartOf": {
           "@id": "https://thebarcode.in/#website"
+        },
+        "mainEntity": {
+          "@id": "https://thebarcode.in/#business"
         },
         "about": {
           "@id": "https://thebarcode.in/#business"
