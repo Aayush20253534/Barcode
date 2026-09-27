@@ -1108,6 +1108,96 @@ section[id], main [id] { scroll-margin-top: 72px; }
   .menu__meta { flex-direction: column; }
 }
 
+/* ---------- MOBILE USABILITY HARDENING ----------
+   Mobile-only: preserves the desktop layout while keeping small text readable
+   and interactive targets comfortably separated/tappable.
+   ------------------------------------------------ */
+@media (max-width: 899px) {
+  .nav__logo {
+    display: grid;
+    place-items: center;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .nav__toggle {
+    min-width: 48px;
+    min-height: 48px;
+    font-size: .75rem;
+  }
+
+  .menu__links a {
+    min-height: 48px;
+  }
+
+  .menu__num {
+    font-size: 1rem;
+  }
+
+  .menu__meta {
+    font-size: .875rem;
+  }
+
+  .menu__meta a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: .35rem 0;
+  }
+
+  .btn {
+    min-height: max(var(--h), 48px);
+    font-size: .75rem;
+  }
+
+  .link-line,
+  .link-line--sm {
+    min-height: 48px;
+    font-size: .75rem;
+  }
+
+  .kicker,
+  .visit__list dt,
+  .drinks__hint,
+  .g-item__cap span,
+  .lightbox__count {
+    font-size: .75rem;
+  }
+
+  .gallery__filters {
+    gap: 10px;
+  }
+
+  .chip {
+    min-height: 48px;
+    font-size: .75rem;
+  }
+
+  .visit__list dd a:not(.link-line) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: .35rem 0;
+  }
+
+  .footer__links {
+    column-gap: 20px;
+    row-gap: 10px;
+  }
+
+  .footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: .6rem .25rem;
+    font-size: .75rem;
+  }
+
+  .footer__legal {
+    font-size: .75rem;
+    line-height: 1.7;
+  }
+}
 /* Short landscape screens */
 @media (min-width: 900px) and (max-height: 700px) {
   .hero__title { font-size: clamp(3rem, 7vw, 7rem); }
