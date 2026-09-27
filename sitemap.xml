@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- SEO: replace YOUR-DOMAIN.example with the final production domain before indexing. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://YOUR-DOMAIN.example/</loc>
+    <loc>https://thebarcode.in/</loc>
   </url>
 </urlset>

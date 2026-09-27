@@ -1,5 +1,4 @@
-# SEO: replace YOUR-DOMAIN.example with the final production domain before indexing.
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-DOMAIN.example/sitemap.xml
+Sitemap: https://thebarcode.in/sitemap.xml
