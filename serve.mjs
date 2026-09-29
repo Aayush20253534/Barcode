@@ -12,6 +12,7 @@ const TYPES = {
   '.js': 'text/javascript; charset=utf-8',
   '.mjs': 'text/javascript; charset=utf-8',
   '.json': 'application/json',
+  '.xml': 'application/xml; charset=utf-8',
   '.webp': 'image/webp',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
@@ -25,6 +26,7 @@ const TYPES = {
 http.createServer((req, res) => {
   let path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   if (path.endsWith('/')) path += 'index.html';
+  else if (!extname(path)) path += '.html';
   const file = normalize(join(ROOT, path));
   if (!file.startsWith(ROOT)) {
     res.writeHead(403).end('Forbidden');
