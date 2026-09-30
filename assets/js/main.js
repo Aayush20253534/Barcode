@@ -411,10 +411,9 @@
     }
 
     function render(p) {
-      // On phones, start advancing the film immediately with the first scroll
-      // instead of spending the opening portion on an almost-static title card.
-      const filmProgress = phone ? clamp(p * 1.08) : p;
-      const film = clamp(filmProgress / FILM.filmShare);
+      // The first pixel of hero scroll advances the film. The page remains
+      // pinned until the sequence and its short end hold have completed.
+      const film = clamp(p / FILM.filmShare);
       const hold = clamp((p - FILM.filmShare) / (1 - FILM.filmShare));
       const f = film * (N - 1);
       const i0 = Math.min(N - 1, Math.floor(f));
@@ -504,7 +503,9 @@
       if (r.bottom < -50 && current === 1) return;
       target = progress();
       if (current < 0) current = target;
-      const k = phone ? 0.34 : variant === 'm' ? 0.24 : 0.12;
+      // Phone scrolling should track the finger closely. Excessive damping
+      // made the opening frames feel like dead scroll before playback began.
+      const k = phone ? 0.72 : variant === 'm' ? 0.24 : 0.12;
       const next = current + (target - current) * damp(k, dt);
       const moved = Math.abs(next - current) > 0.00002;
       current = Math.abs(target - next) < 0.00005 ? target : next;
