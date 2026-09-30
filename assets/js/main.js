@@ -80,7 +80,7 @@
     count: 283,
     base: { d: 'assets/hero/d/', m: 'assets/hero/m/' },
     end: { d: 'assets/hero/poster-d.webp', m: 'assets/hero/poster-m.webp' },
-    filmShare: 0.86, // share of the hero scroll that plays the film; the rest holds the final frame
+    filmShare: 0.94, // play almost to the end of the pinned hero; only a short final-frame hold remains
     shots: [
       [0.000, 'Darkness'],
       [0.085, 'The Bottle'],
@@ -503,12 +503,12 @@
       if (r.bottom < -50 && current === 1) return;
       target = progress();
       if (current < 0) current = target;
-      // Phone scrolling should track the finger closely. Excessive damping
-      // made the opening frames feel like dead scroll before playback began.
-      const k = phone ? 0.72 : variant === 'm' ? 0.24 : 0.12;
-      const next = current + (target - current) * damp(k, dt);
+      // On phones the film is a true scroll scrub: finger position maps
+      // directly to frame progress. Desktop/tablet retain cinematic damping.
+      const k = variant === 'm' ? 0.24 : 0.12;
+      const next = phone ? target : current + (target - current) * damp(k, dt);
       const moved = Math.abs(next - current) > 0.00002;
-      current = Math.abs(target - next) < 0.00005 ? target : next;
+      current = phone || Math.abs(target - next) < 0.00005 ? target : next;
       if (moved || needsDraw) {
         needsDraw = false;
         render(current);
