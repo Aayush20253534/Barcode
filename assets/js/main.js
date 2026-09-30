@@ -411,7 +411,10 @@
     }
 
     function render(p) {
-      const film = clamp(p / FILM.filmShare);
+      // On phones, start advancing the film immediately with the first scroll
+      // instead of spending the opening portion on an almost-static title card.
+      const filmProgress = phone ? clamp(p * 1.08) : p;
+      const film = clamp(filmProgress / FILM.filmShare);
       const hold = clamp((p - FILM.filmShare) / (1 - FILM.filmShare));
       const f = film * (N - 1);
       const i0 = Math.min(N - 1, Math.floor(f));
@@ -460,7 +463,10 @@
       section.classList.toggle('is-end', p > 0.9);
       section.classList.toggle('is-scrolled', p > 0.008);
 
-      if (opening) opening.style.opacity = (1 - smooth(clamp(p / 0.03))).toFixed(3);
+      if (opening) {
+        const openingFade = phone ? 0.012 : 0.03;
+        opening.style.opacity = (1 - smooth(clamp(p / openingFade))).toFixed(3);
+      }
 
       for (const w of whispers) {
         const fade = 0.028;
@@ -498,7 +504,7 @@
       if (r.bottom < -50 && current === 1) return;
       target = progress();
       if (current < 0) current = target;
-      const k = variant === 'm' ? 0.2 : 0.12;
+      const k = phone ? 0.34 : variant === 'm' ? 0.24 : 0.12;
       const next = current + (target - current) * damp(k, dt);
       const moved = Math.abs(next - current) > 0.00002;
       current = Math.abs(target - next) < 0.00005 ? target : next;
