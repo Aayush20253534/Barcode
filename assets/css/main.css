@@ -1455,3 +1455,17 @@ section[id], main [id] { scroll-margin-top: 72px; }
     overflow: clip;
   }
 }
+
+
+/* Mobile hero v5: one continuous scrub, then a clean natural exit. */
+@media (max-width: 600px) {
+  .hero {
+    height: 400svh;
+    min-height: 400svh;
+  }
+  .hero__sticky {
+    top: 0;
+    height: 100svh;
+    min-height: 100svh;
+  }
+}
