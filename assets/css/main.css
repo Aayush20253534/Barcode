@@ -1417,3 +1417,25 @@ section[id], main [id] { scroll-margin-top: 72px; }
   .hero__ctas { gap: 4px; }
   .m-reserve { left: 8px; right: 8px; }
 }
+
+
+/* Mobile viewport lock + immediate hero playback */
+@media (max-width: 600px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .hero {
+    width: 100%;
+    max-width: 100vw;
+    height: 360vh;
+  }
+  .hero__sticky {
+    width: 100%;
+    height: 100svh;
+  }
+  .hero__canvas {
+    max-width: none;
+  }
+}
