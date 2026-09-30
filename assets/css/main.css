@@ -1439,3 +1439,19 @@ section[id], main [id] { scroll-margin-top: 72px; }
     max-width: none;
   }
 }
+
+
+/* Mobile hero v4: keep the film pinned for its complete scroll sequence. */
+@media (max-width: 600px) {
+  .hero {
+    height: 460svh;
+    min-height: 460svh;
+  }
+  .hero__sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 100svh;
+    overflow: clip;
+  }
+}
