@@ -109,42 +109,8 @@
     const content = $('.hero__content', section);
     const nav = $('.nav');
 
-    // Mobile hero rendering is intentionally self-contained here so the
-    // no-crop fix does not depend on a particular main.css revision.
-    // The portrait sequence is mastered on true black; keep the full phone
-    // hero on the same black and never transform/crop the stage.
-    if (!document.getElementById('hero-phone-full-frame-fix')) {
-      const style = document.createElement('style');
-      style.id = 'hero-phone-full-frame-fix';
-      style.textContent = `
-        @media (max-width: 600px) {
-          .hero,
-          .hero__sticky,
-          .hero__stage,
-          .hero__canvas,
-          .hero__poster {
-            background: #000 !important;
-          }
-
-          .hero__stage {
-            transform: none !important;
-          }
-
-          .hero__stage::after {
-            display: none !important;
-          }
-
-          .hero__poster img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain !important;
-            object-position: 50% 50% !important;
-            background: #000 !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    // Mobile presentation is controlled by main.css. Keeping presentation
+    // rules out of runtime-injected styles prevents CSS/JS specificity fights.
 
     let isStatic = false;
     const goStatic = () => {
@@ -300,14 +266,16 @@
       enqueue(critical);
     }
 
-    // Smartphone composition: show the COMPLETE portrait frame. "Contain"
-    // is the only scaling rule here, so no part of the animation is cropped
-    // and there is no artificial 0.56/0.60/0.66 card-like downscaling.
+    // Smartphone composition uses the dedicated portrait sequence and fills
+    // the viewport, avoiding the boxed/letterboxed appearance on phone ratios.
     const PHONE_MAX_W = 600;
     const PHONE_BG = '#000000';
 
     function phoneFit(cw, ch, iw, ih) {
-      const s = Math.min(cw / iw, ch / ih);
+      // Fill the phone viewport with the dedicated portrait sequence.
+      // A small edge crop on unusually tall/wide phones is preferable to
+      // letterboxing the animation as a visible rectangular card.
+      const s = Math.max(cw / iw, ch / ih);
       const w = iw * s;
       const h = ih * s;
       return { x: (cw - w) * 0.5, y: (ch - h) * 0.5, w, h };
